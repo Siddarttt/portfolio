@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "Bash(curl -s \"http://localhost:3000/_next/static/css/app/layout.css\")",
+      "Bash(npx tsc *)",
+      "Bash(echo \"exit: $?\")",
+      "Bash(ls -t ~/Downloads/*.jpg ~/Downloads/*.jpeg ~/Downloads/*.png ~/Downloads/*.webp 2>/dev/null | head -20)",
+      "Bash(cp \"/Users/mac-rac-15/Downloads/WhatsApp Image 2026-07-13 at 3.59.22 PM.jpeg\" \"/private/tmp/claude-501/-Users-mac-rac-15-Downloads-portfolio/baa35b66-1608-433e-b911-044d24fb49c6/scratchpad/portrait-src.jpeg\")",
+      "Bash(python3 -c \"import PIL; print\\('PIL', PIL.__version__\\)\")",
+      "Bash(npm init *)",
+      "Bash(npm install *)",
+      "Bash(node dither.js)",
+      "Bash(curl -sL --max-time 20 \"https://www.scanflow.ai/\" -o /private/tmp/claude-501/-Users-mac-rac-15-Downloads-portfolio/baa35b66-1608-433e-b911-044d24fb49c6/scratchpad/scanflow.html)",
+      "Bash(curl -sL --max-time 20 -O \"https://www.scanflow.ai/linkedin-banner.jpg\" -O \"https://www.scanflow.ai/wp-content/themes/scanflow/assets/img/home-hbanner.webp\" -O \"https://www.scanflow.ai/wp-content/uploads/2025/05/about-us.png\")",
+      "Bash(rm -rf scanflow-assets)",
+      "Bash(mkdir scanflow-assets *)",
+      "Bash(unzip -o \"/Users/mac-rac-15/Downloads/Scanflow Assets.zip\" -d scanflow-assets)",
+      "Bash(node -e ' *)",
+      "Bash(ls -la public/scanflow/)",
+      "Bash(echo \"tsc exit: $?\")",
+      "Bash(rm -rf /Users/mac-rac-15/Downloads/portfolio/.next/cache/images)",
+      "Bash(rm -rf jbl-assets)",
+      "Bash(mkdir jbl-assets *)",
+      "Bash(unzip -o \"/Users/mac-rac-15/Downloads/Just be lekker assets.zip\" -d jbl-assets)",
+      "Bash(mkdir -p /Users/mac-rac-15/Downloads/portfolio/public/jbl)",
+      "Bash(rm -rf carousel)",
+      "Bash(mkdir carousel *)",
+      "Bash(unzip -o \"/Users/mac-rac-15/Downloads/Images Carousel.zip\" -d carousel)"
+    ]
+  }
+}

@@ -1,0 +1,367 @@
+@import "tailwindcss";
+
+/*
+  ============================================================
+  DESIGN TOKENS — wired 1:1 from design.md (v1.0)
+  ============================================================
+  design.md is the single source of truth. Do not add values
+  that are not defined there. Extrapolations (fluid mobile type
+  steps, line-heights, tracking) are documented inline and were
+  approved in the Design Review.
+
+  Token name mapping to design.md §7 names:
+    background  → Background      #FAFAF8
+    surface     → Surface         #FFFFFF
+    foreground  → Primary Text    #161616
+    muted       → Secondary Text  #5F6368
+    border      → Border          #E8E8E8
+    accent      → Accent          #2563EB (links & CTAs ONLY)
+    success / warning / error → status colors.
+    NOTE: warning #F59E0B fails AA as text on light backgrounds —
+    status/graphic use only, never body text.
+*/
+
+@theme {
+  /* ---- Color — dark technical-editorial theme ----
+     Near-black canvas, warm off-white ink, pale-mint accent.
+     Muted/border are ink at reduced alpha so they sit naturally on
+     any dark plate. Accent is used for links, CTAs and display
+     highlights (theme revision of the accent-scarcity rule). */
+  --color-*: initial;
+  --color-background: #0e0e0e;
+  --color-surface: #1a1a1a;
+  --color-foreground: #ece9e4;
+  --color-muted: rgb(236 233 228 / 0.72);
+  --color-border: rgb(236 233 228 / 0.16);
+  --color-accent: #c3fffc;
+  --color-success: #4ade80;
+  --color-warning: #fbbf24;
+  --color-error: #f87171;
+  --color-white: #ffffff;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  /* ---- Type scale (design.md §8) ----
+     Desktop-first values per spec; clamp() derives the approved
+     mobile step-down (design.md gives no mobile scale — flagged
+     and approved in the Design Review).
+     Arvo revision: sizes and spacing are unchanged; tracking is
+     relaxed and display line-heights eased slightly — slab serifs
+     carry more visual weight per glyph than the previous grotesque
+     and collide under tight negative tracking. */
+  /* Hero display. Dark-theme revision: the display face is UPPERCASE
+     Rubik 800, whose caps advance ~25% wider than the previous
+     sentence-case slab — 60px is the measured ceiling at which the
+     longest authored headline line (30ch) holds inside the 1280
+     container. Uppercase carries scale visually, so 60 reads as large
+     as the old 76. */
+  --text-hero: clamp(2.5rem, 1.1rem + 3.6vw, 3.75rem); /* 40 → 60 */
+  --text-hero--line-height: 1.06;
+  --text-hero--letter-spacing: -0.01em;
+  --text-h1: clamp(2.25rem, 1.4rem + 3vw, 3.5rem); /* 36 → 56 */
+  --text-h1--line-height: 1.12;
+  --text-h1--letter-spacing: -0.01em;
+  --text-h2: clamp(1.75rem, 1.35rem + 1.6vw, 2.5rem); /* 28 → 40 */
+  --text-h2--line-height: 1.2;
+  --text-h2--letter-spacing: 0em;
+  --text-h3: clamp(1.375rem, 1.2rem + 0.8vw, 1.75rem); /* 22 → 28 */
+  --text-h3--line-height: 1.25;
+  --text-h4: 1.25rem; /* 20 */
+  --text-h4--line-height: 1.35;
+  --text-body-lg: 1.125rem; /* 18 */
+  --text-body-lg--line-height: 1.6;
+  --text-body: 1rem; /* 16 */
+  --text-body--line-height: 1.65;
+  --text-caption: 0.875rem; /* 14 */
+  --text-caption--line-height: 1.5;
+
+  /* ---- Spacing (design.md §9: 8px base) ----
+     Semantic steps over the sanctioned set 8…128.
+     Tailwind's default numeric scale stays available and is used
+     only for values inside this set (e.g. p-2 = 8, p-6 = 24). */
+  --spacing-xs: 8px;
+  --spacing-sm: 16px;
+  --spacing-md: 24px;
+  --spacing-lg: 32px;
+  --spacing-xl: 48px;
+  --spacing-2xl: 64px;
+  --spacing-3xl: 96px;
+  --spacing-4xl: 128px;
+
+  /* ---- Layout (design.md §10) ---- */
+  --container-content: 1280px;
+
+  /* ---- Radius ----
+     Quiet, editorial corners. Reset default scale so only these exist. */
+  --radius-*: initial;
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-full: 9999px;
+
+  /* ---- Border width ----
+     One sanctioned stroke: the hairline. `border` (1px) is the only
+     border-width utility permitted in components. */
+  --hairline: 1px;
+
+  /* ---- Typographic details ---- */
+  --tracking-eyebrow: 0.14em;
+
+  /* ---- Media aspect ratios ---- */
+  --aspect-standard: 4 / 3;
+
+  /* ---- Chrome ---- */
+  --spacing-header: 56px; /* 7 x 8px grid; used by nav height + hero viewport math */
+
+  /* ---- Z-index ---- */
+  --z-header: 40;
+  --z-skip: 50;
+
+  /* ---- Icon sizes ----
+     Registered in the spacing namespace so size-icon-* utilities work.
+     Lucide icons must use these; never raw pixel sizes. */
+  --spacing-icon-sm: 16px;
+  --spacing-icon-md: 20px;
+  --spacing-icon-lg: 24px;
+
+  /* ---- Elevation ----
+     design.md §12 sanctions "Hover Elevation"; §20 forbids
+     oversized shadows. One quiet resting/hover pair only. */
+  --shadow-rest: 0 1px 2px rgb(22 22 22 / 0.04);
+  --shadow-hover: 0 4px 16px rgb(22 22 22 / 0.08);
+
+  /* ---- Motion (design.md §12) ----
+     150 / 250 / 400ms via built-in duration-150/250/400 utilities.
+     Sanctioned effects: fade, translate, opacity, image reveal,
+     hover elevation. Never bounce / rotate / elastic. */
+  --ease-out-quiet: cubic-bezier(0.25, 0.6, 0.3, 1);
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 400ms;
+
+  /* ---- Progressive reveal (design.md §12: fade + translate) ----
+     Pure CSS: zero client JS. Translate distance = --spacing-xs. */
+  --animate-rise: rise var(--duration-slow) var(--ease-out-quiet) both;
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(var(--spacing-xs));
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* Font tokens reference next/font runtime variables → @theme inline.
+   Dark-theme revision: ONE family (Rubik variable) carries the whole
+   interface — display, labels, and body differ by weight, case and
+   tracking, not by family. */
+@theme inline {
+  --font-heading: var(--font-rubik), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-rubik), ui-sans-serif, system-ui, sans-serif;
+  /* JetBrains Mono (design.md §8) registered but not loaded — no code
+     content exists yet. See lib/fonts.ts. */
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo,
+    monospace;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Headings: Rubik 800 UPPERCASE — the theme's display voice. Sizes
+     are applied per component via the text-* scale so hierarchy stays
+     deliberate. (text-transform is presentation; content strings are
+     untouched.) */
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--color-foreground);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Accent is reserved for links and CTAs (design.md §7). */
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-background);
+  }
+
+  /* Anchored sections land clear of the sticky header. */
+  [id] {
+    scroll-margin-top: calc(var(--spacing-header) + var(--spacing-md));
+  }
+
+  /* Visible focus states (design.md §14). */
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+/* The eyebrow — the theme's technical label voice: section indices,
+   project subtitles, status chrome. Rubik 500, tracked uppercase. */
+@utility eyebrow {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--text-caption);
+  line-height: var(--text-caption--line-height);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-eyebrow);
+  color: var(--color-muted);
+}
+
+/* Outlined display glyphs — the theme's signature title treatment:
+   transparent fill, accent stroke. Paired with solid-accent words
+   inside section titles. */
+@utility text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--color-accent);
+}
+
+/* ---- Animated project cover (Scanflow) ----
+   Three quiet, continuous motions: a ken-burns pan on the brand
+   field, a vertical drift on the floating site card, and a mint
+   scan-beam sweep (the product scans — the motion tells the truth).
+   All disabled under prefers-reduced-motion. */
+@keyframes cover-pan {
+  from {
+    transform: scale(1.06);
+  }
+  to {
+    transform: scale(1.14) translateY(-2%);
+  }
+}
+@keyframes cover-drift {
+  from {
+    transform: translateY(6px);
+  }
+  to {
+    transform: translateY(-6px);
+  }
+}
+@keyframes cover-scan {
+  from {
+    top: -6%;
+  }
+  to {
+    top: 106%;
+  }
+}
+
+/* ---- Photography marquee ----
+   The track holds two copies of the collage; sliding one full copy
+   (-50%) and looping reads as an endless drift. Pauses on hover so
+   frames can be studied; under prefers-reduced-motion the strip
+   becomes a manually scrollable row instead. */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@layer utilities {
+  .animate-cover-pan {
+    animation: cover-pan 26s var(--ease-out-quiet) infinite alternate;
+  }
+  .animate-cover-drift {
+    animation: cover-drift 7s ease-in-out infinite alternate;
+  }
+  /* Counter-phase drift for a second floating layer — opposite
+     direction and off-beat duration so the two never sync. */
+  .animate-cover-drift-counter {
+    animation: cover-drift 9s ease-in-out infinite alternate-reverse;
+  }
+  .animate-cover-scan {
+    animation: cover-scan 8s linear infinite;
+  }
+  .animate-marquee {
+    animation: marquee 90s linear infinite;
+  }
+  .marquee-viewport:hover .animate-marquee {
+    animation-play-state: paused;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .animate-marquee {
+      animation: none;
+    }
+    .marquee-viewport {
+      overflow-x: auto;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .animate-cover-pan,
+    .animate-cover-drift,
+    .animate-cover-drift-counter,
+    .animate-cover-scan {
+      animation: none;
+    }
+    .animate-cover-scan {
+      display: none;
+    }
+  }
+}
+
+@layer utilities {
+  /* Editorial measure — body copy must never exceed ~65-70 characters
+     per line. Apply to every long-form text block. */
+  .measure {
+    max-width: 66ch;
+  }
+  .measure-wide {
+    /* For 18px large-body intro paragraphs. */
+    max-width: 60ch;
+  }
+
+  /* Reveal stagger — steps derived from --duration-fast, no magic numbers. */
+  .rise-2 {
+    animation-delay: calc(var(--duration-fast) * 0.5);
+  }
+  .rise-3 {
+    animation-delay: var(--duration-fast);
+  }
+  .rise-4 {
+    animation-delay: calc(var(--duration-fast) * 1.5);
+  }
+
+  /* Reduced motion: content appears instantly, fully visible. */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-rise {
+      animation: none;
+    }
+  }
+}
