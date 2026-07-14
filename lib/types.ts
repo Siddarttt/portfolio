@@ -108,5 +108,11 @@ export interface SiteContent {
     /** Curated frames rendered by the editorial collage / carousel. */
     gallery: PhotoItem[];
   };
-  contact: string;
+  contact: {
+    /** The closing invitation statement (bookends the Hero). */
+    invitation: string;
+    /** Direct channels, rendered as quiet CTA-voice links. */
+    email: string;
+    phone: string;
+  };
 }

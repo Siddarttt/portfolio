@@ -103,7 +103,11 @@ export const site: SiteContent = {
       { src: "/photography/p18.webp", alt: "Photography by Siddarth S", orientation: "portrait" },
     ],
   },
-  contact: "Let's build meaningful digital experiences together.",
+  contact: {
+    invitation: "Let's build meaningful digital experiences together.",
+    email: "sid.artt02@gmail.com",
+    phone: "+91 77082 23822",
+  },
 };
 
 /* Invariant: authored line breaks must never drift from the verbatim
