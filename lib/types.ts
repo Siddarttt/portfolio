@@ -23,6 +23,51 @@ export interface CaseStudySection {
   bullets?: string[];
 }
 
+/** Placeholder board motif shown until a slide's real asset exists. */
+export type CarouselMotif =
+  | "grid"
+  | "flow"
+  | "device"
+  | "window"
+  | "document"
+  | "frame"
+  | "code"
+  | "social";
+
+/**
+ * One frame of an EditorialCarousel. `src` is optional until real
+ * artwork arrives — a slide with no src renders a premium presentation
+ * board (motif icon + label) instead of an empty grey box.
+ */
+export interface CarouselSlide {
+  id: string;
+  label: string;
+  alt: string;
+  motif: CarouselMotif;
+  src?: string;
+}
+
+/**
+ * One chapter within a case study's Product/GTM editorial view:
+ * numbered heading, short paragraph, then its carousel (the section's
+ * hero) and optional supporting notes. `slides` is omitted for
+ * evidence-voice sections (e.g. Outcomes) that carry text only.
+ */
+export interface CaseStudyTabSection {
+  id: string;
+  number: string;
+  title: string;
+  paragraph: string;
+  slides?: CarouselSlide[];
+  notes?: string[];
+}
+
+export interface CaseStudyTab {
+  id: string;
+  label: string;
+  sections: CaseStudyTabSection[];
+}
+
 export interface CaseStudy {
   slug: string;
   title: string;
@@ -50,6 +95,12 @@ export interface CaseStudy {
    * ProcessStep component (approved Design Review resolution).
    */
   sections: CaseStudySection[];
+  /**
+   * Optional Product/GTM editorial views, rendered immediately after
+   * the Overview section via CaseStudyViews. Omitted entirely for case
+   * studies still on the flat `sections` narrative (e.g. Just Be Lekker).
+   */
+  tabs?: CaseStudyTab[];
 }
 
 export interface ExperienceItem {

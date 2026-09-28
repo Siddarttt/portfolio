@@ -105,8 +105,9 @@ function ScanflowCover() {
     <LayeredCover
       label="Scanflow — product website and mobile app over a factory scene"
       backdrop="/scanflow/cover-bg.webp"
-      card="/scanflow/site-home.webp"
-      phone="/scanflow/app-screen.webp"
+      card="/scanflow/home.png"
+      cardAspect="aspect-video"
+      phone="/scanflow/cargo.png"
       phoneAspect="aspect-[393/852]"
     >
       <div
@@ -125,12 +126,26 @@ function ScanflowCover() {
 function JustBeLekkerCover() {
   return (
     <LayeredCover
-      label="Just Be Lekker — claims dashboard and booking verification app"
+      label="Just Be Lekker — claims dashboard and guest stays app"
       backdrop="/jbl/cover-bg.webp"
-      card="/jbl/dashboard.webp"
-      cardAspect="aspect-[1440/941]"
-      phone="/jbl/app-form.webp"
+      card="/jbl/super-admin.png"
+      cardAspect="aspect-[1024/670]"
+      phone="/jbl/phone-dash.png"
       phoneAspect="aspect-[360/800]"
+    />
+  );
+}
+
+/* Lowry — map field, analytics dashboard, location list on a phone. */
+function LowryCover() {
+  return (
+    <LayeredCover
+      label="Lowry — asset dashboard and location list"
+      backdrop="/lowry/cover-bg.png"
+      card="/lowry/dashboard.png"
+      cardAspect="aspect-[1024/729]"
+      phone="/lowry/phone.png"
+      phoneAspect="aspect-[360/801]"
     />
   );
 }
@@ -138,4 +153,5 @@ function JustBeLekkerCover() {
 export const projectCovers: Record<string, ReactNode> = {
   scanflow: <ScanflowCover />,
   "just-be-lekker": <JustBeLekkerCover />,
+  lowry: <LowryCover />,
 };

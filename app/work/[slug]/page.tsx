@@ -1,9 +1,11 @@
+import { Fragment } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import type { CaseStudy } from "@/lib/types";
 import { projects, getProject } from "@/content/projects";
 import { CaseStudyHeader } from "@/components/case-study/CaseStudyHeader";
 import { CaseStudySection } from "@/components/case-study/CaseStudySection";
+import { CaseStudyViews } from "@/components/case-study/CaseStudyViews";
 import { CaseStudyNav } from "@/components/case-study/CaseStudyNav";
 import { Container } from "@/components/layout/Container";
 import { MediaFrame } from "@/components/ui/MediaFrame";
@@ -80,28 +82,37 @@ export default async function CaseStudyPage({ params }: PageProps) {
         </Reveal>
         {/* Chapter rhythm: the largest reading intervals on the site. */}
         <div className="mt-3xl flex flex-col gap-y-3xl lg:mt-4xl lg:gap-y-4xl">
-          {blocks.map((block) =>
-            block.kind === "section" ? (
-              <Reveal key={block.section.id}>
-                <CaseStudySection section={block.section} />
-              </Reveal>
-            ) : (
-              <Reveal key={block.titles.join("-")}>
-                <aside
-                  aria-label="Forthcoming sections"
-                  className="grid grid-cols-1 gap-y-sm lg:grid-cols-12 lg:gap-x-md"
-                >
-                  {/* Case Study Content Placeholder (grouped) — sections
-                      exist in the canonical order but await authoring. */}
-                  <p className="eyebrow lg:col-span-4">Forthcoming</p>
-                  <p className="measure text-body text-muted lg:col-span-6 lg:col-start-7">
-                    {block.titles.join(" · ")} — to be authored from project
-                    source material during the enrichment phase.
-                  </p>
-                </aside>
-              </Reveal>
-            ),
-          )}
+          {blocks.map((block, i) => (
+            <Fragment key={block.kind === "section" ? block.section.id : block.titles.join("-")}>
+              {block.kind === "section" ? (
+                <Reveal>
+                  <CaseStudySection section={block.section} />
+                </Reveal>
+              ) : (
+                <Reveal>
+                  <aside
+                    aria-label="Forthcoming sections"
+                    className="grid grid-cols-1 gap-y-sm lg:grid-cols-12 lg:gap-x-md"
+                  >
+                    {/* Case Study Content Placeholder (grouped) — sections
+                        exist in the canonical order but await authoring. */}
+                    <p className="eyebrow lg:col-span-4">Forthcoming</p>
+                    <p className="measure text-body text-muted lg:col-span-6 lg:col-start-7">
+                      {block.titles.join(" · ")} — to be authored from project
+                      source material during the enrichment phase.
+                    </p>
+                  </aside>
+                </Reveal>
+              )}
+              {/* Product/GTM editorial views (when defined) slot in
+                  immediately after Overview — always the first block. */}
+              {i === 0 && study.tabs ? (
+                <Reveal>
+                  <CaseStudyViews tabs={study.tabs} />
+                </Reveal>
+              ) : null}
+            </Fragment>
+          ))}
         </div>
       </Container>
       <CaseStudyNav current={study} />
