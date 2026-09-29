@@ -20,11 +20,13 @@ export interface CaseStudyMedia {
   height?: number;
 }
 
-/** A titled block inside a section — used for the three Scanflow solutions. */
+/** A titled block inside a section — one solution, with its frames. */
 export interface CaseStudyFeature {
   title: string;
   paragraphs: string[];
-  media?: CaseStudyMedia;
+  bullets?: string[];
+  /** One clip, or the frames that belong to this solution. */
+  media?: CaseStudyMedia | CaseStudyMedia[];
 }
 
 export interface CaseStudySection {

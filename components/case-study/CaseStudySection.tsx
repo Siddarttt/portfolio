@@ -5,7 +5,14 @@ import type {
 } from "@/lib/types";
 import { ContentPlaceholder } from "./ContentPlaceholder";
 
-function SectionMedia({ media }: { media: CaseStudyMedia }) {
+function isPortrait(media: CaseStudyMedia) {
+  return (
+    media.type === "image" &&
+    (media.height ?? 0) > (media.width ?? 0)
+  );
+}
+
+function MediaFrame({ media }: { media: CaseStudyMedia }) {
   if (media.type === "video") {
     return (
       <video
@@ -15,13 +22,21 @@ function SectionMedia({ media }: { media: CaseStudyMedia }) {
         muted
         loop
         playsInline
-        className="mt-xl w-full rounded-sm border border-border bg-surface lg:mt-2xl"
+        className="w-full rounded-sm border border-border bg-surface"
       />
     );
   }
 
+  const portrait = isPortrait(media);
+
   return (
-    <div className="mt-xl overflow-hidden rounded-sm border border-border bg-surface lg:mt-2xl">
+    <div
+      className={
+        portrait
+          ? "mx-auto w-full max-w-[420px] overflow-hidden rounded-sm border border-border bg-surface"
+          : "overflow-hidden rounded-sm border border-border bg-surface"
+      }
+    >
       <Image
         src={media.src}
         alt={media.alt}
@@ -29,6 +44,36 @@ function SectionMedia({ media }: { media: CaseStudyMedia }) {
         height={media.height ?? 900}
         className="h-auto w-full"
       />
+    </div>
+  );
+}
+
+function SectionMedia({
+  media,
+}: {
+  media: CaseStudyMedia | CaseStudyMedia[];
+}) {
+  const items = Array.isArray(media) ? media : [media];
+  const phoneRow =
+    items.length > 1 && items.every((item) => isPortrait(item));
+
+  if (phoneRow) {
+    return (
+      <div className="mt-xl grid grid-cols-1 justify-items-center gap-md sm:grid-cols-3 lg:mt-2xl">
+        {items.map((item) => (
+          <div key={item.src} className="w-full max-w-[280px]">
+            <MediaFrame media={item} />
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className="mt-xl flex flex-col gap-md lg:mt-2xl">
+      {items.map((item) => (
+        <MediaFrame key={item.src} media={item} />
+      ))}
     </div>
   );
 }
@@ -101,6 +146,13 @@ export function CaseStudySection({ section }: { section: SectionData }) {
                 {paragraph}
               </p>
             ))}
+            {feature.bullets ? (
+              <ul className="flex list-disc flex-col gap-y-xs pl-md text-body marker:text-muted">
+                {feature.bullets.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            ) : null}
           </div>
         </div>
         {feature.media ? <SectionMedia media={feature.media} /> : null}
