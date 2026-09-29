@@ -1,5 +1,37 @@
-import type { CaseStudySection as SectionData } from "@/lib/types";
+import Image from "next/image";
+import type {
+  CaseStudyMedia,
+  CaseStudySection as SectionData,
+} from "@/lib/types";
 import { ContentPlaceholder } from "./ContentPlaceholder";
+
+function SectionMedia({ media }: { media: CaseStudyMedia }) {
+  if (media.type === "video") {
+    return (
+      <video
+        src={media.src}
+        aria-label={media.alt}
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="mt-xl w-full rounded-sm border border-border bg-surface lg:mt-2xl"
+      />
+    );
+  }
+
+  return (
+    <div className="mt-xl overflow-hidden rounded-sm border border-border bg-surface lg:mt-2xl">
+      <Image
+        src={media.src}
+        alt={media.alt}
+        width={media.width ?? 1600}
+        height={media.height ?? 900}
+        className="h-auto w-full"
+      />
+    </div>
+  );
+}
 
 /**
  * One editorial chapter of a case study, on the spine: chapter
@@ -16,8 +48,8 @@ export function CaseStudySection({ section }: { section: SectionData }) {
     <section
       id={section.id}
       aria-labelledby={`${section.id}-heading`}
-      className="grid grid-cols-1 gap-y-sm lg:grid-cols-12 lg:gap-x-md"
     >
+      <div className="grid grid-cols-1 gap-y-sm lg:grid-cols-12 lg:gap-x-md">
       <div className="lg:col-span-4">
         <h2 id={`${section.id}-heading`} className="text-h3">
           {section.title}
@@ -47,9 +79,33 @@ export function CaseStudySection({ section }: { section: SectionData }) {
                 ))}
               </ul>
             ) : null}
+            {section.closing?.map((paragraph) => (
+              <p key={paragraph} className="measure text-body">
+                {paragraph}
+              </p>
+            ))}
           </>
         )}
       </div>
+    </div>
+
+    {section.media ? <SectionMedia media={section.media} /> : null}
+
+    {section.features?.map((feature) => (
+      <div key={feature.title} className="mt-3xl lg:mt-4xl">
+        <div className="grid grid-cols-1 gap-y-sm lg:grid-cols-12 lg:gap-x-md">
+          <h3 className="text-h3 lg:col-span-4">{feature.title}</h3>
+          <div className="flex flex-col gap-y-sm lg:col-span-6 lg:col-start-7">
+            {feature.paragraphs.map((paragraph) => (
+              <p key={paragraph} className="measure text-body">
+                {paragraph}
+              </p>
+            ))}
+          </div>
+        </div>
+        {feature.media ? <SectionMedia media={feature.media} /> : null}
+      </div>
+    ))}
     </section>
   );
 }

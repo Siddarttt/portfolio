@@ -11,6 +11,22 @@
 
 export type SectionStatus = "complete" | "pending";
 
+export interface CaseStudyMedia {
+  type: "image" | "video";
+  src: string;
+  alt: string;
+  /** Intrinsic size for stills, so the frame keeps the artwork's ratio. */
+  width?: number;
+  height?: number;
+}
+
+/** A titled block inside a section — used for the three Scanflow solutions. */
+export interface CaseStudyFeature {
+  title: string;
+  paragraphs: string[];
+  media?: CaseStudyMedia;
+}
+
 export interface CaseStudySection {
   /** Stable id, used for anchors and keys. */
   id: string;
@@ -21,6 +37,12 @@ export interface CaseStudySection {
   paragraphs?: string[];
   /** Bullet list content. Only present when status is "complete". */
   bullets?: string[];
+  /** Paragraphs that follow the bullet list. */
+  closing?: string[];
+  /** Still or looping clip shown under the section copy. */
+  media?: CaseStudyMedia;
+  /** Titled sub-chapters, each with its own copy and optional media. */
+  features?: CaseStudyFeature[];
 }
 
 /** Placeholder board motif shown until a slide's real asset exists. */
@@ -79,6 +101,12 @@ export interface CaseStudy {
   summary: string;
   role: string;
   responsibilities: string[];
+  /**
+   * Header ledger copied from a source case study (Role, Platform,
+   * Duration, Team). When set, it replaces the default
+   * Role / Responsibilities / Domain rows.
+   */
+  facts?: { label: string; value: string }[];
   /**
    * Design process steps (verbatim from the project markdown), rendered
    * by the ProcessStep component in the case study header. Optional —

@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import type { CaseStudy } from "@/lib/types";
 import { Container } from "@/components/layout/Container";
 import { ProcessStep } from "./ProcessStep";
@@ -19,16 +20,29 @@ export function CaseStudyHeader({ study }: { study: CaseStudy }) {
 
         <div className="mt-2xl grid grid-cols-1 gap-y-md lg:grid-cols-12 lg:gap-x-md">
           <dl className="grid grid-cols-1 gap-y-xs md:grid-cols-[auto_1fr] md:gap-x-lg md:gap-y-sm lg:col-span-6 lg:col-start-7">
-            <dt className="text-caption text-muted">Role</dt>
-            <dd className="text-body">{study.role}</dd>
-            <dt className="mt-sm text-caption text-muted md:mt-0">
-              Responsibilities
-            </dt>
-            <dd className="text-body text-muted">
-              {study.responsibilities.join(" · ")}
-            </dd>
-            <dt className="mt-sm text-caption text-muted md:mt-0">Domain</dt>
-            <dd className="text-body text-muted">{study.tags.join(" · ")}</dd>
+            {study.facts ? (
+              study.facts.map((fact) => (
+                <Fragment key={fact.label}>
+                  <dt className="text-caption text-muted first:mt-0 mt-sm md:mt-0">
+                    {fact.label}
+                  </dt>
+                  <dd className="text-body">{fact.value}</dd>
+                </Fragment>
+              ))
+            ) : (
+              <>
+                <dt className="text-caption text-muted">Role</dt>
+                <dd className="text-body">{study.role}</dd>
+                <dt className="mt-sm text-caption text-muted md:mt-0">
+                  Responsibilities
+                </dt>
+                <dd className="text-body text-muted">
+                  {study.responsibilities.join(" · ")}
+                </dd>
+                <dt className="mt-sm text-caption text-muted md:mt-0">Domain</dt>
+                <dd className="text-body text-muted">{study.tags.join(" · ")}</dd>
+              </>
+            )}
             {study.process ? (
               <>
                 <dt className="mt-sm text-caption text-muted md:mt-0">

@@ -97,25 +97,23 @@ function LayeredCover({
   );
 }
 
-/* Scanflow — factory scene backdrop, scanflow.ai hero, Cargo
-   Reception app, plus the mint scan beam: the one literal motion,
-   because scanning is what the product does. */
+/* Scanflow — the retail case study's opening still: a phone with
+   the in-store map and shopping list. */
 function ScanflowCover() {
   return (
-    <LayeredCover
-      label="Scanflow — product website and mobile app over a factory scene"
-      backdrop="/scanflow/cover-bg.webp"
-      card="/scanflow/home.png"
-      cardAspect="aspect-video"
-      phone="/scanflow/cargo.png"
-      phoneAspect="aspect-[393/852]"
+    <div
+      role="img"
+      aria-label="Scanflow — in-store map and shopping list on a phone"
+      className="relative aspect-video overflow-hidden rounded-sm border border-border bg-surface"
     >
-      <div
-        aria-hidden
-        className="animate-cover-scan absolute inset-x-0 h-px bg-accent opacity-40"
-        style={{ boxShadow: "0 0 24px 4px rgb(195 255 252 / 0.35)" }}
+      <Image
+        src="/scanflow/retail-hero.png"
+        alt=""
+        fill
+        sizes="(min-width: 1280px) 1184px, 100vw"
+        className="object-cover"
       />
-    </LayeredCover>
+    </div>
   );
 }
 
