@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { ArrowDown } from "lucide-react";
 import { Container } from "@/components/layout/Container";
+import { HeroPlate } from "@/components/ui/HeroPlate";
 import { Button } from "@/components/ui/Button";
 import { site } from "@/content/site";
 
@@ -51,7 +52,7 @@ export function Hero() {
           Gradient scrims melt the plate's edges into the canvas so
           type keeps AA contrast; image-rendering: pixelated keeps the
           blocks crisp at any scale. */}
-      <div aria-hidden className="absolute inset-y-0 right-0 w-full md:w-3/5 lg:w-1/2">
+      <HeroPlate>
         <Image
           src="/hero-portrait-dither.png"
           alt=""
@@ -70,7 +71,7 @@ export function Hero() {
             ].join(", "),
           }}
         />
-      </div>
+      </HeroPlate>
 
       <Container className="relative">
         <div className="flex min-h-[calc(100svh-var(--spacing-header))] flex-col justify-center py-3xl lg:py-4xl">

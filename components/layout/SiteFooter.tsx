@@ -1,5 +1,6 @@
 import { Container } from "@/components/layout/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { Parallax } from "@/components/ui/Parallax";
 import { Reveal } from "@/components/ui/Reveal";
 import { site } from "@/content/site";
 
@@ -15,11 +16,13 @@ export function SiteFooter() {
     <footer id="contact" aria-labelledby="contact-heading" className="border-t border-border">
       <Container>
         <div className="pt-4xl pb-3xl">
-          <Reveal>
-            <SectionHeading id="contact-heading" index="07">
-              Contact
-            </SectionHeading>
-          </Reveal>
+          <Parallax offset={-16}>
+            <Reveal>
+              <SectionHeading id="contact-heading" index="07">
+                Contact
+              </SectionHeading>
+            </Reveal>
+          </Parallax>
           <Reveal delay={0.15}>
             <p className="mt-xl max-w-[22ch] font-heading text-h2 font-bold uppercase">
             {/* Bind "digital experiences" — the phrase that bookends the

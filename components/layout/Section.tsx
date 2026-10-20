@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { Container } from "./Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { Parallax } from "@/components/ui/Parallax";
 import { Reveal } from "@/components/ui/Reveal";
 
 /**
@@ -53,15 +54,17 @@ export function Section({
             (it is now a headline, not a whisper); content keeps hanging
             from the editorial spine below it. */}
         {/* Section-wide fade-in: title first, content a beat later. */}
-        <Reveal>
-          <SectionHeading id={`${id}-heading`} index={index}>
-            {label}
-          </SectionHeading>
-        </Reveal>
-        <div className="mt-xl grid grid-cols-1 lg:mt-2xl lg:grid-cols-12 lg:gap-x-md">
-          <Reveal delay={0.15} className="lg:col-span-6 lg:col-start-7">
-            {children}
+        <Parallax offset={-24}>
+          <Reveal>
+            <SectionHeading id={`${id}-heading`} index={index}>
+              {label}
+            </SectionHeading>
           </Reveal>
+        </Parallax>
+        <div className="mt-xl grid grid-cols-1 lg:mt-2xl lg:grid-cols-12 lg:gap-x-md">
+          <Parallax offset={28} className="lg:col-span-6 lg:col-start-7">
+            <Reveal delay={0.15}>{children}</Reveal>
+          </Parallax>
         </div>
       </Container>
     </section>
