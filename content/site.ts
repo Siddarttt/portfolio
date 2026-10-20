@@ -105,7 +105,7 @@ export const site: SiteContent = {
   },
   contact: {
     invitation: "Let's build meaningful digital experiences together.",
-    email: "sid.artt02@gmail.com",
+    email: "siddartt02@gmail.com",
     phone: "+91 77082 23822",
   },
 };
